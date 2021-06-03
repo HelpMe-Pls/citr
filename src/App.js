@@ -1,5 +1,8 @@
+import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import SearchParams from "./SearchParams";
+import Details from "./Details";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 // Vanilla React
 // const App = () => {
@@ -28,10 +31,31 @@ import SearchParams from "./SearchParams";
 const App = () => {
 	return (
 		<div>
-			<h1 id="cặc">Adopt Me</h1>
-			<SearchParams />
+			<Router>
+				<header>
+					<Link to="/">
+						<h1 id="cặc">Adopt Me</h1>
+					</Link>
+				</header>
+				<Switch>
+					{/* Switch will render either one of the Route, if there's no Switch, it will render all of the Routes top-down */}
+					<Route exact path="/">
+						{/* if there's no {exact}, Details will not rendered coz its path pattern matches with the SearchParams first
+					so it'll render SearchParam instead */}
+						<SearchParams />
+					</Route>
+					<Route path="/details/:id">
+						<Details />
+					</Route>
+				</Switch>
+			</Router>
 		</div>
 	);
 };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(
+	<StrictMode>
+		<App />
+	</StrictMode>,
+	document.getElementById("root")
+);
