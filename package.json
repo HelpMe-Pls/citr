@@ -1,0 +1,38 @@
+{
+  "name": "citr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
+    "dev": "parcel src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HelpMe-Pls/citr.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HelpMe-Pls/citr/issues"
+  },
+  "homepage": "https://github.com/HelpMe-Pls/citr#readme",
+  "dependencies": {
+    "npm": "^7.15.1",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/preset-react": "^7.12.13",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "parcel": "^1.12.3",
+    "prettier": "^2.3.0"
+  }
+}
