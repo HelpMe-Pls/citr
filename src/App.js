@@ -1,8 +1,10 @@
-import { StrictMode } from "react";
+import { StrictMode, useState } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+
 import SearchParams from "./SearchParams";
 import Details from "./Details";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import ThemeContext from "./ThemeContext";
 
 // Vanilla React
 // const App = () => {
@@ -29,27 +31,34 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 // };
 
 const App = () => {
+	const themeHook = useState("darkblue"); // why useState here ? maybe to update the theme if user changes to another theme ? or maybe that's just how useContext works ?
+	// the {themeHook} got stored in Context so that after the user chose the desired theme, they switch back and forth between HomePage and DetailsPage, the button's color stays
+	// other states like {animal}, {breed} isn't stored so when the user chose an {animal}, and go to one of the <Details/>, then go back to HomePage, it's cleared
 	return (
-		<div>
-			<Router>
-				<header>
-					<Link to="/">
-						<h1 id="cặc">Adopt Me</h1>
-					</Link>
-				</header>
-				<Switch>
-					{/* Switch will render either one of the Route, if there's no Switch, it will render all of the Routes top-down */}
-					<Route exact path="/">
-						{/* if there's no {exact}, Details will not rendered coz its path pattern matches with the SearchParams first
-					so it'll render SearchParam instead */}
-						<SearchParams />
-					</Route>
-					<Route path="/details/:id">
-						<Details />
-					</Route>
-				</Switch>
-			</Router>
-		</div>
+		<ThemeContext.Provider value={themeHook}>
+			{/* value={["darkblue"]} */}
+			{/* theme affects EVERY components */}
+			<div>
+				<Router>
+					<header>
+						<Link to="/">
+							<h1 id="cặc">Adopt Me</h1>
+						</Link>
+					</header>
+					<Switch>
+						{/* Switch will render either one of the Route, if there's no Switch, it will render all of the Routes top-down */}
+						<Route exact path="/">
+							{/* if there's no {exact}, <Details/> will not rendered coz its path pattern matches with the <SearchParams/> first
+					so it'll render <SearchParam/> instead */}
+							<SearchParams />
+						</Route>
+						<Route path="/details/:id">
+							<Details />
+						</Route>
+					</Switch>
+				</Router>
+			</div>
+		</ThemeContext.Provider>
 	);
 };
 
