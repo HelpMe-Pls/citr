@@ -1,6 +1,15 @@
 import { Link } from "react-router-dom";
 
-const Pet = ({ name, animal, breed, images, location, id }) => {
+interface IProps {
+	name: string,
+	animal: string,
+	breed: string,
+	images: string[],
+	location: string,
+	id: number
+}
+
+const Pet: React.FC<IProps> = ({ name, animal, breed, images, location, id }) => {
 	// props (or its destructured form) is only declared for intial component, not when you use it (in App)
 	let hero = "http://pets-images.dev-apis.com/pets/none.jpg";
 	if (images.length) {
