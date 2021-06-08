@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { StrictMode, useState } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-
+import { Provider } from 'react-redux'
+import store from "./store"
 import SearchParams from "./SearchParams";
 import Details from "./Details";
 import ThemeContext from "./ThemeContext";
@@ -31,13 +33,9 @@ import ThemeContext from "./ThemeContext";
 // };
 
 const App = () => {
-	const themeHook = useState("darkblue"); // why useState here ? maybe to update the theme if user changes to another theme ? or maybe that's just how useContext works ?
-	// the {themeHook} got stored in Context so that after the user chose the desired theme, they switch back and forth between HomePage and DetailsPage, the button's color stays
-	// other states like {animal}, {breed} isn't stored so when the user chose an {animal}, and go to one of the <Details/>, then go back to HomePage, it's cleared
+
 	return (
-		<ThemeContext.Provider value={themeHook}>
-			{/* value={["darkblue"]} */}
-			{/* theme affects EVERY components */}
+		<Provider store={store}>
 			<div>
 				<Router>
 					<header>
@@ -58,7 +56,7 @@ const App = () => {
 					</Switch>
 				</Router>
 			</div>
-		</ThemeContext.Provider>
+		</Provider>
 	);
 };
 

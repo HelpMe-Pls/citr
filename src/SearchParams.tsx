@@ -1,20 +1,32 @@
-import { useState, useEffect, useContext } from "react";
-
-import ThemeContext from "./ThemeContext";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import useBreedList from "./useBreedList";
-import Results from "./Results";
+import Results from "./Results"
 import { PetAPIResponse, Animal, Pet } from "./APIResponseTypes"
+
+import changeAnimal from "./actionCreators/changeAnimal"
+import changeBreed from "./actionCreators/changeBreed"
+import changeLocation from "./actionCreators/changeLocation"
+import changeTheme from "./actionCreators/changeTheme"
+
 
 
 const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
 
 const SearchParams: React.FC = () => {
-	const [location, updateLocation] = useState("");
-	const [animal, updateAnimal] = useState("" as Animal);
-	const [breed, updateBreed] = useState("");
+	const animal = useSelector((state: { animal: any; }) => state.animal)
+	const location = useSelector((state: { location: any; }) => state.location)
+	const theme = useSelector((state: { theme: any; }) => state.theme)
+	const breed = useSelector((state: { breed: any; }) => state.breed)
 	const [pets, setPets] = useState([] as Pet[]);
 	const [breeds] = useBreedList(animal); //why React understands [breeds] eventho the hook's return statement is [breedList,status] ?
-	const [theme, setTheme] = useContext(ThemeContext);
+	const dispatch = useDispatch()
 
 	useEffect(() => {
 		void requestPets();
@@ -29,6 +41,12 @@ const SearchParams: React.FC = () => {
 		setPets(json.pets);
 	}
 
+	function handleAnimalChange(e: any) {
+		dispatch(changeAnimal(e.target.value))
+		dispatch(changeBreed(""))
+	}
+
+
 	return (
 		<div className="search-params">
 			<form
@@ -39,20 +57,20 @@ const SearchParams: React.FC = () => {
 			>
 				<label htmlFor="location">
 					Location
-					<input
+						<input
 						id="location"
 						value={location.toUpperCase()}
 						placeholder="Location"
-						onChange={(e) => updateLocation(e.target.value)}
+						onChange={(e) => dispatch(changeLocation(e.target.value))}
 					/>
 				</label>
 				<label htmlFor="animal">
 					Animal
-					<select
+						<select
 						id="animal"
 						value={animal}
-						onChange={(e) => updateAnimal(e.target.value as Animal)}
-						onBlur={(e) => updateAnimal(e.target.value as Animal)}
+						onChange={handleAnimalChange}
+						onBlur={handleAnimalChange}
 					>
 						<option /> {/* Blank option at first render */}
 						{ANIMALS.map((animal) => (
@@ -64,11 +82,11 @@ const SearchParams: React.FC = () => {
 				</label>
 				<label htmlFor="breed">
 					Breed
-					<select
+						<select
 						id="breed"
 						value={breed}
-						onChange={(e) => updateBreed(e.target.value)}
-						onBlur={(e) => updateBreed(e.target.value)}
+						onChange={(e) => dispatch(changeBreed(e.target.value))}
+						onBlur={(e) => dispatch(changeBreed(e.target.value))}
 					>
 						<option /> {/* Blank option at first render */}
 						{breeds.map((breed) => (
@@ -80,10 +98,10 @@ const SearchParams: React.FC = () => {
 				</label>
 				<label htmlFor="theme">
 					Theme
-					<select
+						<select
 						value={theme}
-						onChange={(e) => setTheme(e.target.value)}
-						onBlur={(e) => setTheme(e.target.value)}
+						onChange={(e) => dispatch(changeTheme(e.target.value))}
+						onBlur={(e) => dispatch(changeTheme(e.target.value))}
 					>
 						<option value="darkblue">Dark Blue</option>
 						<option value="peru">Peru</option>
@@ -97,6 +115,7 @@ const SearchParams: React.FC = () => {
 			<Results pets={pets} />
 		</div>
 	);
-};
+}
+
 
 export default SearchParams;
