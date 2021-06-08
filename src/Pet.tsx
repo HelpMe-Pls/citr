@@ -12,7 +12,7 @@ interface IProps {
 const Pet: React.FC<IProps> = ({ name, animal, breed, images, location, id }) => {
 	// props (or its destructured form) is only declared for intial component, not when you use it (in App)
 	let hero = "http://pets-images.dev-apis.com/pets/none.jpg";
-	if (images.length) {
+	if (images && images.length) {
 		hero = images[0];
 	}
 	return (
@@ -20,7 +20,7 @@ const Pet: React.FC<IProps> = ({ name, animal, breed, images, location, id }) =>
 			{" "}
 			{/* Using Link here is for the sake of SPA, otherwise using <a> tag it'll reload the page */}
 			<div className="image-container">
-				<img src={hero} alt={name} />
+				<img data-testid="thumbnail" src={hero} alt={name} />
 			</div>
 			<div className="info">
 				<h1>{name}</h1>

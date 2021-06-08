@@ -1,3 +1,4 @@
+/* eslint-disable import/namespace */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { StrictMode, useState } from "react";
 import ReactDOM from "react-dom";

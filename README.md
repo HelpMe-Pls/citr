@@ -1,0 +1,1 @@
+type in CI: `open coverage/lcov-report/index.html` to have a better view of test coverage ?
