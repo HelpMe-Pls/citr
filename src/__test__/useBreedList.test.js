@@ -17,7 +17,8 @@ import { renderHook } from "@testing-library/react-hooks";
 // }
 
 test("gives an empty array with no animal", async () => {
-	const { result } = renderHook(() => useBreedList());
+	const { result, waitForNextUpdate } = renderHook(() => useBreedList());
+	await waitForNextUpdate();
 	const [breedList, status] = result.current;
 
 	expect(breedList).toHaveLength(0);
